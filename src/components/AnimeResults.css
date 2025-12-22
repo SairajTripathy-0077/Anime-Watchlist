@@ -1,0 +1,12 @@
+.manga-filter {
+        filter: grayscale(100%) contrast(110%);
+        transition: filter 0.3s ease;
+    }
+.group:hover .manga-filter {
+    filter: grayscale(0%) contrast(100%);
+}
+.bg-halftone {
+    background-image: radial-gradient(#000 1.5px, transparent 1.5px);
+    background-size: 15px 15px;
+    opacity: 0.2;
+}

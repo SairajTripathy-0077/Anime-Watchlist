@@ -1,0 +1,24 @@
+@font-face {
+  font-family: 'Clickuper';
+  /* Make sure the path matches where you put the file! */
+  src: url('./assets/fonts/Clickuper.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Alphabutts';
+  /* Make sure the path matches where you put the file! */
+  src: url('./assets/fonts/Alphabutts.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'MinecraftAlt';
+  /* Make sure the path matches where you put the file! */
+  src: url('./assets/fonts/Minecraft.Alt.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;

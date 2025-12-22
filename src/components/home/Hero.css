@@ -1,0 +1,32 @@
+
+@keyframes scrollY {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes scrollYReverse {
+  from {
+    transform: translateY(-50%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+.animate-scrollY {
+  animation: scrollY 20s linear infinite;
+}
+
+.animate-scrollYReverse {
+  animation: scrollYReverse 25s linear infinite;
+}
+
+.bg-halftone {
+    background-image: radial-gradient(#000 1.5px, transparent 1.5px);
+    background-size: 15px 15px;
+    opacity: 0.2;
+}
