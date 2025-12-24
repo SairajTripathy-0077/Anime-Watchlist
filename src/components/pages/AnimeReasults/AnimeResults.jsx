@@ -2,17 +2,37 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './AnimeResults.css'
+import AnimeModal from '../../AnimeModal.jsx';
+import { useState, useEffect } from 'react';
+import toast,{Toaster} from 'react-hot-toast';
+import {addToWatchlist, removeFromWatchlist, isInWatchlist, getWatchlist} from "../../utils/Watchlist.js";
 
 const AnimeResults = () => {
+  const [selectedAnime, setSelectedAnime] = useState(null);
+  const [watchlistVersion, setWatchlistVersion] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
+
   
   // Access the data passed from SearchBar
   const animeList = location.state?.animeList || [];
 
+
+
+  const handleWatchlist = (anime) => {
+    if (isInWatchlist(anime.mal_id)) {
+      removeFromWatchlist(anime.mal_id);
+    } else {
+      addToWatchlist(anime);
+    }
+    //force re-render
+    setWatchlistVersion(v => v + 1);
+  };
+
+
   return (
     <div className="max-w-7xl mx-auto px-6 py-10">
-      <div class="fixed inset-0 bg-halftone pointer-events-none z-0"></div>
+      <div className="fixed inset-0 bg-halftone pointer-events-none z-0"></div>
       
       {/* Header with Back Button */}
       <div className="flex justify-between items-center mb-8 z-10">
@@ -28,8 +48,10 @@ const AnimeResults = () => {
       {/* Grid of Results */}
       {animeList.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 z-10">
-          {animeList.map((anime) => (
-            <div key={anime.mal_id} className="bg-white border-2 relative border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all p-4">
+          {animeList.map((anime) => {
+            const added = isInWatchlist(anime.mal_id);
+            return(
+            <div onClick={() => setSelectedAnime(anime)} key={anime.mal_id} className="bg-white border-2 relative border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all p-4">
               <div className="h-64 overflow-hidden border-2 border-black mb-4 group">
                 <img 
                     src={anime.images.jpg.image_url} 
@@ -51,13 +73,31 @@ const AnimeResults = () => {
                   <span>•</span>
                   <span>{anime.duration ? anime.duration.split(' ')[0] + 'm' : 'N/A'}</span>
               </div>
+              <button
+                onClick={(e) => {
+                  {!added ? toast.success("Added to Watchlist ⭐"): toast.error("Removed from Wathlist")}
+                  e.stopPropagation()
+                  handleWatchlist(anime)}}
+                className={`w-full py-2 mb-4 font-bold border-2 border-black transition-all uppercase tracking-wider
+                ${added ? 'bg-red-600 text-white hover:bg-red-700' : 'bg-transparent text-black hover:bg-black hover:text-white'}`}
+              >
+                {added ? "Remove from Watchlist" : "Add to Watchlist"}
+              </button>
             </div>
-          ))}
+          )})}
         </div>
       ) : (
         <div className="text-center py-20">
             <h2 className="text-2xl font-bold text-gray-400 uppercase">No Results Found</h2>
         </div>
+      )}
+      <Toaster position="bottom-right" />
+      {/* Modal */}
+      {selectedAnime && (
+          <AnimeModal 
+              anime={selectedAnime} 
+              onClose={() => setSelectedAnime(null)} 
+          />
       )}
     </div>
   );

@@ -1,17 +1,18 @@
 import React from 'react'
-import Navbar from '../Navbar'
-import trio from '../../assets/trio.png'
-import goku from '../../assets/goku.png'
-import B1 from '../../assets/B1.png'
-import B2 from '../../assets/B2.png'
-import B3 from '../../assets/B3.png'
-import B4 from '../../assets/B4.png'
-import B5 from '../../assets/B5.png'
-import B6 from '../../assets/B6.png'
+import Navbar from '../../Navbar'
+import trio from '../../../assets/trio.png'
+import goku from '../../../assets/goku.png'
+import B1 from '../../../assets/B1.png'
+import B2 from '../../../assets/B2.png'
+import B3 from '../../../assets/B3.png'
+import B4 from '../../../assets/B4.png'
+import B5 from '../../../assets/B5.png'
+import B6 from '../../../assets/B6.png'
 import './Hero.css'
 import {motion, scale, spring} from 'framer-motion'
 import TopAnime from './TopAnime'
-
+import FAQ from '../../FAQ'
+import Footer from '../../Footer'
 
 const Hero = () => {
   const columnImages = [
@@ -30,7 +31,7 @@ const isMobile = window.innerWidth < 768;
             <div className="relative">
               <motion.div
                 initial={{ opacity: 0, y: -200 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{
                   type: "spring",
                   stiffness: 25,
@@ -67,7 +68,7 @@ const isMobile = window.innerWidth < 768;
 
                 <motion.img 
                     initial = {{opacity: 0, y:300}}
-                    whileInView = {{opacity:1, y:isMobile? -10 :0, scale: 1, x:isMobile? 20:30}}
+                    animate = {{opacity:1, y:isMobile? -10 :0, scale: 1, x:isMobile? 20:30}}
                     transition={{
                       duration: 2,
                       delay: 0.5,
@@ -79,7 +80,7 @@ const isMobile = window.innerWidth < 768;
 
                 <motion.img 
                     initial = {{opacity: 0, y:isMobile? 150:200}}
-                    whileInView = {{opacity:1, y:isMobile? 0:0, scale: 1}}
+                    animate = {{opacity:1, y:isMobile? 0:0, scale: 1}}
                     transition={{
                       duration: 1.5,
                       type: spring,
@@ -93,10 +94,17 @@ const isMobile = window.innerWidth < 768;
             </div>
           </section>
       </div>
-          <section className="h-screen">
-            <div class="fixed inset-0 bg-halftone pointer-events-none z-0"></div>
-            <TopAnime />
-          </section>
+      <section className="h-auto bg-white ">
+        <div className="fixed inset-0 bg-halftone pointer-events-none z-0"></div>
+        <TopAnime />
+      </section>
+      <section className="h-auto mt-10 z-20">
+        <FAQ />
+      </section>
+      <section className="h-auto mt-10 z-20">
+        <Footer />
+      </section>
+
     </main>
   )
 }
